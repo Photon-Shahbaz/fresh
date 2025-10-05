@@ -2,7 +2,7 @@ import { router } from "expo-router";
 import { useRef, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-// import Swiper from "react-native-swiper";
+import Swiper from "react-native-swiper";
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 
 
