@@ -66,6 +66,15 @@ const Map = () => {
     destinationLongitude,
   });
 
+  // Safety check to ensure region is valid
+  if (!region || !region.latitude || !region.longitude) {
+    return (
+      <View className="flex justify-between items-center w-full">
+        <Text>Loading map...</Text>
+      </View>
+    );
+  }
+
   if (loading || (!userLatitude && !userLongitude))
     return (
       <View className="flex justify-between items-center w-full">
@@ -85,7 +94,7 @@ const Map = () => {
       provider={PROVIDER_DEFAULT}
       className="w-full h-full rounded-2xl"
       tintColor="black"
-      mapType="mutedStandard"
+      mapType="standard"
       showsPointsOfInterest={false}
       initialRegion={region}
       showsUserLocation={true}
