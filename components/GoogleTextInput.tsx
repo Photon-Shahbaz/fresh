@@ -28,7 +28,6 @@ const GoogleTextInput = ({
         keepResultsAfterBlur={true}
         listEmptyComponent={() => null}
         predefinedPlaces={[]}
-        currentLocation={true}
         styles={{
           textInputContainer: {
             alignItems: "center",
@@ -71,6 +70,7 @@ const GoogleTextInput = ({
           key: googlePlacesApiKey,
           language: "en",
         }}
+        timeout={20000}
         renderLeftButton={() => (
           <View className="justify-center items-center w-6 h-6">
             <Image
