@@ -6,9 +6,9 @@ import MapViewDirections from "react-native-maps-directions";
 import { icons } from "@/constants";
 import { useFetch } from "@/lib/fetch";
 import {
-  calculateDriverTimes,
-  calculateRegion,
-  generateMarkersFromData,
+    calculateDriverTimes,
+    calculateRegion,
+    generateMarkersFromData,
 } from "@/lib/map";
 import { useDriverStore, useLocationStore } from "@/store";
 import { Driver, MarkerData } from "@/types/type";
@@ -66,11 +66,23 @@ const Map = () => {
     destinationLongitude,
   });
 
+  // Debug logging
+  console.log("Map Debug Info:", {
+    userLatitude,
+    userLongitude,
+    destinationLatitude,
+    destinationLongitude,
+    region,
+    markersCount: markers.length,
+    loading,
+    error
+  });
+
   // Safety check to ensure region is valid
   if (!region || !region.latitude || !region.longitude) {
     return (
       <View className="flex justify-between items-center w-full">
-        <Text>Loading map...</Text>
+        <Text>Loading map... Region: {JSON.stringify(region)}</Text>
       </View>
     );
   }
@@ -92,13 +104,15 @@ const Map = () => {
   return (
     <MapView
       provider={PROVIDER_DEFAULT}
-      className="w-full h-full rounded-2xl"
+      style={{ flex: 1, width: '100%', height: '100%' }}
       tintColor="black"
       mapType="standard"
       showsPointsOfInterest={false}
       initialRegion={region}
+      region={region}
       showsUserLocation={true}
       userInterfaceStyle="light"
+      onMapReady={() => console.log("Map is ready!")}
     >
       {markers.map((marker, index) => (
         <Marker

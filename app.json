@@ -19,7 +19,13 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDJBvXn67vbC5tLQbs-BIFs_YirNmZiWCE"
+        }
+      },
+      "package": "com.anonymous.fresh"
     },
     "web": {
       "bundler": "metro",
@@ -34,7 +40,8 @@
         }
       ],
       "expo-web-browser",
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-location"
     ],
     "experiments": {
       "typedRoutes": true
