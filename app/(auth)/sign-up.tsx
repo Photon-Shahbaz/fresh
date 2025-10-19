@@ -128,6 +128,13 @@ const SignUp = () => {
             Already have an account?{" "}
             <Text className="text-primary-500">Log In</Text>
           </Link>
+          <Link
+            href="/driver-sign-up"
+            className="text-lg text-center text-general-200 mt-3"
+          >
+            Want to drive with us?{" "}
+            <Text className="text-primary-500">Sign up as Driver</Text>
+          </Link>
         </View>
         <ReactNativeModal
           isVisible={verification.state === "pending"}

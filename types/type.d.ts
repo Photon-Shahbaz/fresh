@@ -137,3 +137,13 @@ declare interface DriverCardProps {
   selected: number;
   setSelected: () => void;
 }
+
+declare interface DriverSignUpForm {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  carSeats: string;
+  profileImageUrl: string;
+  carImageUrl: string;
+}

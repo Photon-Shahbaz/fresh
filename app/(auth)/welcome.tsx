@@ -2,7 +2,6 @@ import { router } from "expo-router";
 import { useRef, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Swiper from "react-native-swiper";
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 
 
@@ -58,7 +57,7 @@ const Home = () => {
               {item.description}
             </Text>
           </View>
-        )}
+        )}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
       />
 
       {/* Next / Get Started */}
@@ -75,8 +74,19 @@ const Home = () => {
             });
           }
         }}
-        className="w-11/12 mt-10 mb-5"
+        className="w-11/12 mt-10 mb-3"
       />
+      
+      {/* Sign up as Driver */}
+      {isLastSlide && (
+        <CustomButton
+          title="Sign up as Driver"
+          onPress={() => router.replace("/(auth)/driver-sign-up")}
+          className="w-11/12 mb-5"
+          bgVariant="outline"
+          textVariant="primary"
+        />
+      )}
     </SafeAreaView>
   );
 };

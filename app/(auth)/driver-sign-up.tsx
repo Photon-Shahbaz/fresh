@@ -54,22 +54,32 @@ const DriverSignUp = () => {
         code: verification.code,
       });
       if (completeSignUp.status === "complete") {
-        await fetchAPI("/(api)/driver", {
-          method: "POST",
-          body: JSON.stringify({
-            first_name: form.firstName,
-            last_name: form.lastName,
-            clerkId: completeSignUp.createdUserId,
-            car_seats: form.carSeats,
-            profile_image_url: form.profileImageUrl,
-            car_image_url: form.carImageUrl,
-          }),
-        });
-        await setActive({ session: completeSignUp.createdSessionId });
-        setVerification({
-          ...verification,
-          state: "success",
-        });
+        try {
+          await fetchAPI("/(api)/driver", {
+            method: "POST",
+            body: JSON.stringify({
+              first_name: form.firstName,
+              last_name: form.lastName,
+              clerkId: completeSignUp.createdUserId,
+              car_seats: form.carSeats,
+              profile_image_url: form.profileImageUrl,
+              car_image_url: form.carImageUrl,
+            }),
+          });
+          await setActive({ session: completeSignUp.createdSessionId });
+          setVerification({
+            ...verification,
+            state: "success",
+          });
+        } catch (apiError: any) {
+          if (apiError.message?.includes("409") || apiError.message?.includes("already exists")) {
+            Alert.alert("Driver Already Exists", "You are already registered as a driver with this account.");
+            await setActive({ session: completeSignUp.createdSessionId });
+            router.replace("/(root)/(tabs)/home");
+          } else {
+            throw apiError;
+          }
+        }
       } else {
         setVerification({
           ...verification,
