@@ -147,3 +147,11 @@ declare interface DriverSignUpForm {
   profileImageUrl: string;
   carImageUrl: string;
 }
+
+declare type UserRole = "user" | "driver";
+
+declare interface ClerkUserWithRole {
+  publicMetadata: {
+    role?: UserRole;
+  };
+}

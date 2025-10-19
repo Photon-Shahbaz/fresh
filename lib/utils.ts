@@ -44,3 +44,36 @@ export function formatDate(dateString: string): string {
 
   return `${day < 10 ? "0" + day : day} ${month} ${year}`;
 }
+
+// Role helper functions
+export const getUserRole = async (user: any): Promise<UserRole | null> => {
+  if (!user?.id) return null;
+  
+  try {
+    const response = await fetch("/(api)/check-role", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        clerkId: user.id,
+      }),
+    });
+    
+    const data = await response.json();
+    return data.role;
+  } catch (error) {
+    console.error("Error fetching user role:", error);
+    return null;
+  }
+};
+
+export const isDriver = async (user: any): Promise<boolean> => {
+  const role = await getUserRole(user);
+  return role === "driver";
+};
+
+export const isUser = async (user: any): Promise<boolean> => {
+  const role = await getUserRole(user);
+  return role === "user";
+};

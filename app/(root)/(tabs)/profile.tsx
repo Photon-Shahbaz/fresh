@@ -1,11 +1,25 @@
 import { useUser } from "@clerk/clerk-expo";
+import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import InputField from "@/components/InputField";
+import { getUserRole } from "@/lib/utils";
 
 const Profile = () => {
   const { user } = useUser();
+  const [userRole, setUserRole] = useState<UserRole | null>(null);
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      if (user) {
+        const role = await getUserRole(user);
+        setUserRole(role);
+      }
+    };
+
+    fetchUserRole();
+  }, [user]);
 
   return (
     <SafeAreaView className="flex-1">
@@ -56,6 +70,14 @@ const Profile = () => {
             <InputField
               label="Phone"
               placeholder={user?.primaryPhoneNumber?.phoneNumber || "Not Found"}
+              containerStyle="w-full"
+              inputStyle="p-3.5"
+              editable={false}
+            />
+
+            <InputField
+              label="Role"
+              placeholder={userRole ? userRole.charAt(0).toUpperCase() + userRole.slice(1) : "Loading..."}
               containerStyle="w-full"
               inputStyle="p-3.5"
               editable={false}

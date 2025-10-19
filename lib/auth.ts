@@ -47,6 +47,9 @@ export const googleOAuth = async (startOAuthFlow: any) => {
               clerkId: signUp.createdUserId,
             }),
           });
+          
+          // User role is determined by which table they're stored in
+          // Regular users are stored in the 'users' table
         }
 
         return {
@@ -100,6 +103,9 @@ export const googleOAuthDriver = async (startOAuthFlow: any) => {
               throw apiError;
             }
           }
+          
+          // Driver role is determined by which table they're stored in
+          // Drivers are stored in the 'drivers' table
         }
 
         return {

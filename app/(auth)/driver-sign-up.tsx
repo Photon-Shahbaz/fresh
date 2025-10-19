@@ -1,4 +1,4 @@
-import { useSignUp } from "@clerk/clerk-expo";
+import { useSignUp, useUser } from "@clerk/clerk-expo";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { Alert, Image, ScrollView, Text, View } from "react-native";
@@ -12,6 +12,7 @@ import { fetchAPI } from "@/lib/fetch";
 
 const DriverSignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
+  const { user } = useUser();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const [form, setForm] = useState({
@@ -67,6 +68,10 @@ const DriverSignUp = () => {
             }),
           });
           await setActive({ session: completeSignUp.createdSessionId });
+          
+          // Driver role is determined by which table they're stored in
+          // Drivers are stored in the 'drivers' table
+          
           setVerification({
             ...verification,
             state: "success",
