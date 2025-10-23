@@ -15,7 +15,11 @@ import { Driver, MarkerData } from "@/types/type";
 
 const directionsAPI = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
 
-const Map = () => {
+type MapProps = {
+  hideDriverMarkers?: boolean;
+};
+
+const Map = ({ hideDriverMarkers = false }: MapProps) => {
   const {
     userLongitude,
     userLatitude,
@@ -28,6 +32,7 @@ const Map = () => {
   const [markers, setMarkers] = useState<MarkerData[]>([]);
 
   useEffect(() => {
+    if (hideDriverMarkers) return;
     if (Array.isArray(drivers)) {
       if (!userLatitude || !userLongitude) return;
 
@@ -39,9 +44,10 @@ const Map = () => {
 
       setMarkers(newMarkers);
     }
-  }, [drivers, userLatitude, userLongitude]);
+  }, [drivers, userLatitude, userLongitude, hideDriverMarkers]);
 
   useEffect(() => {
+    if (hideDriverMarkers) return;
     if (
       markers.length > 0 &&
       destinationLatitude !== undefined &&
@@ -57,7 +63,7 @@ const Map = () => {
         setDrivers(drivers as MarkerData[]);
       });
     }
-  }, [markers, destinationLatitude, destinationLongitude]);
+  }, [markers, destinationLatitude, destinationLongitude, hideDriverMarkers]);
 
   const region = calculateRegion({
     userLatitude,
@@ -114,7 +120,7 @@ const Map = () => {
       userInterfaceStyle="light"
       onMapReady={() => console.log("Map is ready!")}
     >
-      {markers.map((marker, index) => (
+      {!hideDriverMarkers && markers.map((marker, index) => (
         <Marker
           key={marker.id}
           coordinate={{

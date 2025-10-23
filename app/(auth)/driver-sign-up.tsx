@@ -228,8 +228,8 @@ const DriverSignUp = () => {
               You have successfully registered as a driver.
             </Text>
             <CustomButton
-              title="Browse Home"
-              onPress={() => router.push(`/(root)/(tabs)/home`)}
+              title="Start driving"
+              onPress={() => router.push(`/(root)/driver-mode`)}
               className="mt-5"
             />
           </View>

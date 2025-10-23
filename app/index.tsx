@@ -1,6 +1,6 @@
 import { isDriver } from "@/lib/utils";
 import { useAuth, useUser } from "@clerk/clerk-expo";
-import { Redirect } from "expo-router";
+import { Redirect, router } from "expo-router";
 import { useEffect, useState } from "react";
 import 'react-native-get-random-values';
 
@@ -29,18 +29,22 @@ const Page = () => {
     checkUserRole();
   }, [isSignedIn, user]);
 
+  useEffect(() => {
+    if (!isSignedIn) return;
+    if (isDriverUser === null) return;
+    if (isDriverUser) {
+      router.replace("/(root)/driver-mode" as any);
+    } else {
+      router.replace("/(root)/(tabs)/home");
+    }
+  }, [isSignedIn, isDriverUser]);
+
   if (!isSignedIn) {
     return <Redirect href="/(auth)/welcome" />;
   }
 
-  if (isLoading) {
-    // You can add a loading component here if needed
-    return <Redirect href="/(root)/(tabs)/home" />;
-  }
-
-  // For now, both users and drivers go to the same home page
-  // You can change this to redirect drivers to a different page later
-  return <Redirect href="/(root)/(tabs)/home" />;
+  // Render nothing while redirecting
+  return null;
 };
 
 export default Page;
